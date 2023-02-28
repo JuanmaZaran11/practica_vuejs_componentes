@@ -1,4 +1,5 @@
 // Sample data
+var listaPeliculas = [];
 var server_data = {
     collection :
     {
@@ -41,12 +42,26 @@ var server_data = {
 
 // TODO: Componente edit-form
 Vue.component('edit-form', {
-
+    template: '#editForm',
+    props: ['parametro', 'elemento'],
+    methods:{
+        closeForm: function (e) {listaPeliculas.splice(listaPeliculas.indexOf(e), 1);}
+    }
 })
 
 // TODO: Componente item-data
 Vue.component('item-data', {
-
+    template: '#itemData',
+    props: ['parametro', 'elemento'],
+    data(){
+        return{
+            editando: false
+        }
+    },
+    
+    methods:{
+        toggledEditFormVisibility: function (e) {listaPeliculas.push(e);}
+    }
 })
 
 // Aplicación VueJS
@@ -54,7 +69,7 @@ Vue.component('item-data', {
 var app = new Vue({
     el: '#app',
     data: {
-        col: server_data
+        col: server_data,
+        peliculas: listaPeliculas
     }
 });
-
